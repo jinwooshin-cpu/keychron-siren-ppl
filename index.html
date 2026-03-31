@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keychron PPL Report – tvN "Siren" (2026)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 48px;
+    background: #111;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #FF4500;
+    padding-bottom: 24px;
+    margin-bottom: 36px;
+  }
+  .header-left h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .header-left h1 span { color: #FF4500; }
+  .header-left .subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.8;
+  }
+  .badge {
+    display: inline-block;
+    background: #FF4500;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 32px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #FF4500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, #FF4500 0%, transparent 100%);
+  }
+
+  /* Info Grid */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .info-card {
+    background: #1a1a1a;
+    border: 1px solid #252525;
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .info-card:hover { border-color: #FF4500; }
+  .info-card .label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+  .info-card .value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .info-card .sub {
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  /* Ratings Table */
+  .ratings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .ratings-table thead th {
+    background: #1a1a1a;
+    color: #999;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+  .ratings-table tbody td {
+    padding: 11px 16px;
+    border-bottom: 1px solid #1e1e1e;
+    color: #ccc;
+  }
+  .ratings-table tbody tr:hover { background: #1a1a1a; }
+  .highlight-val {
+    color: #FF4500;
+    font-weight: 700;
+  }
+  .rank-badge {
+    display: inline-block;
+    background: #1e3a1e;
+    color: #4ade80;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  /* Screenshot Placeholder */
+  .screenshot-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .screenshot-box {
+    background: #1a1a1a;
+    border: 2px dashed #333;
+    border-radius: 8px;
+    padding: 48px 24px;
+    text-align: center;
+    position: relative;
+  }
+  .screenshot-box .icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+  }
+  .screenshot-box .label-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+  }
+  .screenshot-box .desc {
+    font-size: 11px;
+    color: #555;
+    margin-top: 6px;
+  }
+  .screenshot-box .action-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #331a00;
+    color: #FF4500;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Platform Grid */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .platform-card {
+    background: #1a1a1a;
+    border: 1px solid #252525;
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .platform-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .p-tvn { background: linear-gradient(135deg, #e00, #c00); }
+  .p-tving { background: linear-gradient(135deg, #ff2d55, #e00); }
+  .p-apple { background: linear-gradient(135deg, #333, #000); }
+  .p-prime { background: linear-gradient(135deg, #00a8e1, #0073c0); }
+  .p-watcha { background: linear-gradient(135deg, #ff0558, #c0043e); }
+  .p-wavve { background: linear-gradient(135deg, #1e90ff, #0055cc); }
+  .platform-info .p-name { font-weight: 600; font-size: 13px; color: #ddd; }
+  .platform-info .p-detail { font-size: 11px; color: #777; margin-top: 2px; }
+
+  /* Product Info */
+  .product-box {
+    background: #1a1a1a;
+    border: 1px solid #252525;
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .product-img-placeholder {
+    width: 160px;
+    height: 100px;
+    background: #222;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-size: 12px;
+    flex-shrink: 0;
+    border: 1px dashed #333;
+  }
+  .product-details h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .product-details .model-code {
+    font-size: 12px;
+    color: #FF4500;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .product-details p {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.7;
+  }
+
+  /* SNS */
+  .sns-note {
+    background: #1a1a0a;
+    border: 1px solid #333300;
+    border-radius: 8px;
+    padding: 20px 24px;
+    font-size: 13px;
+    color: #aa9944;
+    line-height: 1.8;
+  }
+  .sns-note strong { color: #ccbb44; }
+
+  /* Footer */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #555;
+  }
+
+  /* Action Items */
+  .action-list {
+    list-style: none;
+    padding: 0;
+  }
+  .action-list li {
+    background: #1a1a1a;
+    border-left: 3px solid #FF4500;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .action-list li .step {
+    background: #FF4500;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Two column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media print {
+    body { background: #fff; color: #222; }
+    .page { background: #fff; padding: 24px; }
+    .info-card, .platform-card, .product-box, .screenshot-box { border-color: #ddd; background: #fafafa; }
+    .info-card .value, .product-details h3 { color: #111; }
+    .section-title { color: #d32f2f; }
+    .badge { background: #d32f2f; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="badge">Confidential — Internal Use</div>
+      <h1><span>Keychron</span> Product Placement Report</h1>
+      <div class="subtitle">tvN Drama "Siren" (세이렌) — March 2026</div>
+    </div>
+    <div class="header-right">
+      Prepared by: TBNWS<br>
+      Date: March 31, 2026<br>
+      Document Version: 1.0
+    </div>
+  </div>
+
+  <!-- 1. BASIC INFORMATION -->
+  <div class="section">
+    <div class="section-title">① Basic Information</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="label">Drama Title</div>
+        <div class="value">Siren</div>
+        <div class="sub">세이렌 · 12 Episodes</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Network</div>
+        <div class="value">tvN</div>
+        <div class="sub">CJ ENM · Cable TV #1</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Air Date</div>
+        <div class="value">Mar 2 – Apr 7</div>
+        <div class="sub">Mon & Tue · 20:50 KST</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Genre</div>
+        <div class="value">Romance Thriller</div>
+        <div class="sub">Insurance fraud investigation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAST -->
+  <div class="section">
+    <div class="section-title">Main Cast</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="label">Lead Actress</div>
+        <div class="value" style="font-size:15px;">Park Min-young</div>
+        <div class="sub">as Han Seol-a (Auctioneer)</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Lead Actor</div>
+        <div class="value" style="font-size:15px;">Wi Ha-jun</div>
+        <div class="sub">as Cha Woo-seok (Investigator)</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Lead Actor</div>
+        <div class="value" style="font-size:15px;">Kim Jung-hyun</div>
+        <div class="sub">as Baek Jun-beom (Startup CEO)</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Director</div>
+        <div class="value" style="font-size:15px;">Kim Cheol-gyu</div>
+        <div class="sub">Signal, Flower of Evil</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRODUCT PLACEMENT DETAILS -->
+  <div class="section">
+    <div class="section-title">② Product Placement Details</div>
+    <div class="product-box">
+      <div class="product-img-placeholder">
+        [Product Photo<br>To Be Added]
+      </div>
+      <div class="product-details">
+        <h3>Keychron Keyboard — Model TBD</h3>
+        <div class="model-code">Model Code: Pending confirmation from PPL team</div>
+        <p>
+          The Keychron keyboard appears in office/desk scenes within the drama.
+          Exact episode number and scene timestamp are pending confirmation.
+          The product is expected to appear on the desk of main characters in
+          the <strong>Royal Auction office</strong> or <strong>Baek Jun-beom's startup office</strong> setting.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE SCREENSHOTS -->
+  <div class="section">
+    <div class="section-title">Visual Assets — Scene Screenshots</div>
+    <div class="screenshot-section">
+      <div class="screenshot-box">
+        <div class="action-tag">Action Required</div>
+        <div class="icon">🖥️</div>
+        <div class="label-text">Wide Shot — Office Scene</div>
+        <div class="desc">Full frame showing Keychron keyboard on desk<br>with character in frame for context</div>
+      </div>
+      <div class="screenshot-box">
+        <div class="action-tag">Action Required</div>
+        <div class="icon">⌨️</div>
+        <div class="label-text">Close-up Shot — Keyboard</div>
+        <div class="desc">Zoomed-in capture of the Keychron keyboard<br>showing product details and branding</div>
+      </div>
+    </div>
+    <ul class="action-list" style="margin-top: 16px;">
+      <li><span class="step">1</span> Identify the exact episode(s) where the Keychron keyboard appears</li>
+      <li><span class="step">2</span> Capture HD screenshots via TVING playback (wide + close-up)</li>
+      <li><span class="step">3</span> Confirm exact product model and update this report</li>
+    </ul>
+  </div>
+
+  <!-- 3. EXPOSURE METRICS -->
+  <div class="section">
+    <div class="section-title">③ Exposure Metrics</div>
+
+    <div class="two-col">
+      <div>
+        <table class="ratings-table">
+          <thead>
+            <tr>
+              <th>Episode</th>
+              <th>Avg. Rating</th>
+              <th>Peak Rating</th>
+              <th>Rank</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EP.01 (Mar 2)</td>
+              <td class="highlight-val">5.5%</td>
+              <td class="highlight-val">7.2%</td>
+              <td><span class="rank-badge">#1</span></td>
+            </tr>
+            <tr>
+              <td>EP.02 (Mar 3)</td>
+              <td>5.0%</td>
+              <td>—</td>
+              <td><span class="rank-badge">#1</span></td>
+            </tr>
+            <tr>
+              <td>EP.03 (Mar 9)</td>
+              <td>4.8%</td>
+              <td>—</td>
+              <td><span class="rank-badge">#1</span></td>
+            </tr>
+            <tr>
+              <td>EP.05 (Mar 16)</td>
+              <td class="highlight-val">4.5%</td>
+              <td>5.4%</td>
+              <td><span class="rank-badge">#1</span></td>
+            </tr>
+            <tr>
+              <td>EP.06 (Mar 17)</td>
+              <td>4.4%</td>
+              <td>—</td>
+              <td><span class="rank-badge">#1</span></td>
+            </tr>
+            <tr>
+              <td>EP.07 (Mar 23)</td>
+              <td>3.9%</td>
+              <td>—</td>
+              <td><span class="rank-badge">#1</span></td>
+            </tr>
+            <tr>
+              <td>EP.09 (Mar 30)</td>
+              <td>TBD</td>
+              <td>—</td>
+              <td><span class="rank-badge">#1</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size:10px; color:#555; margin-top:8px;">
+          Source: Nielsen Korea · Paid platform nationwide household basis<br>
+          All episodes ranked #1 among cable/general programming channels in timeslot
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title" style="font-size:11px; margin-bottom:12px;">Streaming Platforms</div>
+        <div style="display:grid; gap:10px;">
+          <div class="platform-card">
+            <div class="platform-icon p-tvn">tvN</div>
+            <div class="platform-info">
+              <div class="p-name">tvN (Linear TV)</div>
+              <div class="p-detail">Primary broadcast · Mon/Tue 20:50 KST</div>
+            </div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-icon p-tving">T</div>
+            <div class="platform-info">
+              <div class="p-name">TVING (Exclusive OTT)</div>
+              <div class="p-detail">5.52M MAU · Korea's #3 OTT platform</div>
+            </div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-icon p-apple">▶</div>
+            <div class="platform-info">
+              <div class="p-name">Apple TV+</div>
+              <div class="p-detail">Available for global distribution</div>
+            </div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-icon p-prime">P</div>
+            <div class="platform-info">
+              <div class="p-name">Amazon Prime Video</div>
+              <div class="p-detail">Available for global distribution</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SNS REACTIONS -->
+  <div class="section">
+    <div class="section-title">SNS & Online Buzz</div>
+    <div class="sns-note">
+      <strong>⚠ Note:</strong> As of March 31, 2026, no specific SNS posts or viewer comments mentioning the Keychron keyboard placement in "Siren" have been identified through web search.
+      Additional monitoring of Twitter/X, Instagram, and Korean community platforms (DCInside, TheQoo, Namu Wiki) is recommended to capture any organic viewer reactions.<br><br>
+      <strong>Recommendation:</strong> If the keyboard appears prominently in upcoming episodes (EP.10–12), consider a coordinated social media campaign with the drama's official hashtag <strong>#세이렌</strong> to maximize brand exposure.
+    </div>
+  </div>
+
+  <!-- 4. SUMMARY -->
+  <div class="section">
+    <div class="section-title">④ Executive Summary</div>
+    <div style="background:#1a1a1a; border:1px solid #252525; border-radius:8px; padding:24px; font-size:13px; line-height:2; color:#ccc;">
+      <strong style="color:#fff; font-size:15px;">Keychron Product Placement in tvN "Siren" (세이렌)</strong><br><br>
+      Keychron keyboards have been featured as office props in the tvN drama <em>"Siren"</em> (세이렌),
+      a romance-thriller airing since March 2, 2026. The drama stars <strong style="color:#fff;">Park Min-young</strong>,
+      <strong style="color:#fff;">Wi Ha-jun</strong>, and <strong style="color:#fff;">Kim Jung-hyun</strong>, and is directed by
+      <strong style="color:#fff;">Kim Cheol-gyu</strong> (known for <em>Signal</em> and <em>Flower of Evil</em>).<br><br>
+      The drama debuted with a <strong style="color:#FF4500;">5.5% average rating (peak 7.2%)</strong> and has maintained
+      the <strong style="color:#FF4500;">#1 position in its timeslot</strong> across all cable and general programming channels
+      for every episode aired. It is exclusively streamed on <strong style="color:#fff;">TVING</strong> (5.52M monthly active users)
+      and is also available on Apple TV+ and Amazon Prime Video for global audiences.<br><br>
+      <strong style="color:#FF4500;">Action Items:</strong>
+      (1) Confirm exact episode(s) and scene(s) where the keyboard appears,
+      (2) Capture HD screenshots from TVING,
+      (3) Identify the specific Keychron model featured,
+      (4) Monitor SNS for organic viewer mentions.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>Keychron PPL Report · tvN "Siren" · Confidential</div>
+    <div>© 2026 TBNWS · Prepared for Keychron HQ</div>
+  </div>
+
+</div>
+</body>
+</html>
