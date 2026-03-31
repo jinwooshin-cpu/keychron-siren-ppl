@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Keychron PPL Report – tvN "Siren" (2026)</title>
+<title>키크론 PPL 리포트 – tvN 세이렌 (2026)</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: #0a0a0a;
     color: #e0e0e0;
-    line-height: 1.6;
+    line-height: 1.8;
   }
 
   .page {
@@ -34,7 +34,7 @@
     margin-bottom: 36px;
   }
   .header-left h1 {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
     color: #fff;
     letter-spacing: -0.5px;
@@ -49,7 +49,7 @@
     text-align: right;
     font-size: 12px;
     color: #666;
-    line-height: 1.8;
+    line-height: 2;
   }
   .badge {
     display: inline-block;
@@ -59,8 +59,7 @@
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 3px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-bottom: 8px;
   }
 
@@ -69,11 +68,10 @@
     margin-bottom: 32px;
   }
   .section-title {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     color: #FF4500;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
@@ -104,8 +102,7 @@
     font-size: 10px;
     font-weight: 600;
     color: #666;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     margin-bottom: 8px;
   }
   .info-card .value {
@@ -130,8 +127,7 @@
     color: #999;
     font-weight: 600;
     font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     padding: 12px 16px;
     text-align: left;
     border-bottom: 1px solid #333;
@@ -164,11 +160,25 @@
   }
   .screenshot-box {
     background: #1a1a1a;
-    border: 2px dashed #333;
+    border: 2px dashed #444;
     border-radius: 8px;
-    padding: 48px 24px;
     text-align: center;
     position: relative;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    overflow: hidden;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .screenshot-box:hover { border-color: #FF4500; }
+  .screenshot-box.has-image { border-style: solid; border-color: #555; }
+  .screenshot-box .placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px;
   }
   .screenshot-box .icon {
     font-size: 40px;
@@ -185,6 +195,12 @@
     color: #555;
     margin-top: 6px;
   }
+  .screenshot-box .upload-hint {
+    font-size: 11px;
+    color: #FF4500;
+    margin-top: 10px;
+    opacity: 0.8;
+  }
   .screenshot-box .action-tag {
     position: absolute;
     top: 12px;
@@ -195,16 +211,46 @@
     font-weight: 700;
     padding: 3px 8px;
     border-radius: 3px;
-    text-transform: uppercase;
     letter-spacing: 0.5px;
+    z-index: 2;
+    transition: opacity 0.2s;
   }
+  .screenshot-box input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+  }
+  .screenshot-box.has-image input[type="file"] { display: none; }
+  .screenshot-box img.preview {
+    width: 100%;
+    height: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+  }
+  .screenshot-box .remove-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    font-size: 11px;
+    padding: 4px 10px;
+    cursor: pointer;
+    z-index: 4;
+    display: none;
+  }
+  .screenshot-box.has-image .remove-btn { display: block; }
+  .screenshot-box.has-image .action-tag { display: none; }
 
-  /* Platform Grid */
-  .platform-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
+  /* Platform Card */
   .platform-card {
     background: #1a1a1a;
     border: 1px solid #252525;
@@ -230,8 +276,6 @@
   .p-tving { background: linear-gradient(135deg, #ff2d55, #e00); }
   .p-apple { background: linear-gradient(135deg, #333, #000); }
   .p-prime { background: linear-gradient(135deg, #00a8e1, #0073c0); }
-  .p-watcha { background: linear-gradient(135deg, #ff0558, #c0043e); }
-  .p-wavve { background: linear-gradient(135deg, #1e90ff, #0055cc); }
   .platform-info .p-name { font-weight: 600; font-size: 13px; color: #ddd; }
   .platform-info .p-detail { font-size: 11px; color: #777; margin-top: 2px; }
 
@@ -273,7 +317,7 @@
   .product-details p {
     font-size: 12px;
     color: #888;
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
   /* SNS */
@@ -284,7 +328,7 @@
     padding: 20px 24px;
     font-size: 13px;
     color: #aa9944;
-    line-height: 1.8;
+    line-height: 2;
   }
   .sns-note strong { color: #ccbb44; }
 
@@ -353,210 +397,215 @@
   <!-- HEADER -->
   <div class="header">
     <div class="header-left">
-      <div class="badge">Confidential — Internal Use</div>
-      <h1><span>Keychron</span> Product Placement Report</h1>
-      <div class="subtitle">tvN Drama "Siren" (세이렌) — March 2026</div>
+      <div class="badge">대외비 — 내부 사용 전용</div>
+      <h1><span>키크론</span> 간접광고(PPL) 결과 리포트</h1>
+      <div class="subtitle">tvN 드라마 「세이렌」 — 2026년 3월</div>
     </div>
     <div class="header-right">
-      Prepared by: TBNWS<br>
-      Date: March 31, 2026<br>
-      Document Version: 1.0
+      작성: TBNWS<br>
+      작성일: 2026년 3월 31일<br>
+      문서 버전: 1.0
     </div>
   </div>
 
-  <!-- 1. BASIC INFORMATION -->
+  <!-- 1. 기본 정보 -->
   <div class="section">
-    <div class="section-title">① Basic Information</div>
+    <div class="section-title">① 기본 정보</div>
     <div class="info-grid">
       <div class="info-card">
-        <div class="label">Drama Title</div>
-        <div class="value">Siren</div>
-        <div class="sub">세이렌 · 12 Episodes</div>
+        <div class="label">드라마명</div>
+        <div class="value">세이렌</div>
+        <div class="sub">Siren · 총 12부작</div>
       </div>
       <div class="info-card">
-        <div class="label">Network</div>
+        <div class="label">방영 채널</div>
         <div class="value">tvN</div>
-        <div class="sub">CJ ENM · Cable TV #1</div>
+        <div class="sub">CJ ENM · 케이블 1위 채널</div>
       </div>
       <div class="info-card">
-        <div class="label">Air Date</div>
-        <div class="value">Mar 2 – Apr 7</div>
-        <div class="sub">Mon & Tue · 20:50 KST</div>
+        <div class="label">방영 기간</div>
+        <div class="value">3/2 – 4/7</div>
+        <div class="sub">매주 월·화 · 저녁 8시 50분</div>
       </div>
       <div class="info-card">
-        <div class="label">Genre</div>
-        <div class="value">Romance Thriller</div>
-        <div class="sub">Insurance fraud investigation</div>
+        <div class="label">장르</div>
+        <div class="value">로맨스 스릴러</div>
+        <div class="sub">보험 사기 조사 소재</div>
       </div>
     </div>
   </div>
 
-  <!-- CAST -->
+  <!-- 출연진 -->
   <div class="section">
-    <div class="section-title">Main Cast</div>
+    <div class="section-title">주요 출연진</div>
     <div class="info-grid">
       <div class="info-card">
-        <div class="label">Lead Actress</div>
-        <div class="value" style="font-size:15px;">Park Min-young</div>
-        <div class="sub">as Han Seol-a (Auctioneer)</div>
+        <div class="label">여자 주인공</div>
+        <div class="value" style="font-size:15px;">박민영</div>
+        <div class="sub">한설아 역 (로얄옥션 수석 경매사)</div>
       </div>
       <div class="info-card">
-        <div class="label">Lead Actor</div>
-        <div class="value" style="font-size:15px;">Wi Ha-jun</div>
-        <div class="sub">as Cha Woo-seok (Investigator)</div>
+        <div class="label">남자 주인공</div>
+        <div class="value" style="font-size:15px;">위하준</div>
+        <div class="sub">차우석 역 (보험 조사관)</div>
       </div>
       <div class="info-card">
-        <div class="label">Lead Actor</div>
-        <div class="value" style="font-size:15px;">Kim Jung-hyun</div>
-        <div class="sub">as Baek Jun-beom (Startup CEO)</div>
+        <div class="label">남자 주인공</div>
+        <div class="value" style="font-size:15px;">김정현</div>
+        <div class="sub">백준범 역 (스타트업 CEO)</div>
       </div>
       <div class="info-card">
-        <div class="label">Director</div>
-        <div class="value" style="font-size:15px;">Kim Cheol-gyu</div>
-        <div class="sub">Signal, Flower of Evil</div>
+        <div class="label">연출</div>
+        <div class="value" style="font-size:15px;">김철규</div>
+        <div class="sub">시그널, 악의 꽃 연출</div>
       </div>
     </div>
   </div>
 
-  <!-- 2. PRODUCT PLACEMENT DETAILS -->
+  <!-- 2. 제품 노출 상세 -->
   <div class="section">
-    <div class="section-title">② Product Placement Details</div>
+    <div class="section-title">② 제품 노출 상세</div>
     <div class="product-box">
       <div class="product-img-placeholder">
-        [Product Photo<br>To Be Added]
+        [제품 사진<br>추가 예정]
       </div>
       <div class="product-details">
-        <h3>Keychron Keyboard — Model TBD</h3>
-        <div class="model-code">Model Code: Pending confirmation from PPL team</div>
+        <h3>키크론 키보드 — 모델 확인 중</h3>
+        <div class="model-code">모델코드: PPL 담당팀 확인 후 업데이트 예정</div>
         <p>
-          The Keychron keyboard appears in office/desk scenes within the drama.
-          Exact episode number and scene timestamp are pending confirmation.
-          The product is expected to appear on the desk of main characters in
-          the <strong>Royal Auction office</strong> or <strong>Baek Jun-beom's startup office</strong> setting.
+          키크론 키보드는 드라마 내 사무실/책상 장면에서 소품으로 등장합니다.
+          정확한 등장 회차 및 타임스탬프는 확인 중입니다.
+          <strong>로얄옥션 사무실</strong> 또는 <strong>백준범의 스타트업 사무실</strong> 세트에서
+          주요 등장인물의 책상 위에 배치된 것으로 예상됩니다.
         </p>
       </div>
     </div>
   </div>
 
-  <!-- SCENE SCREENSHOTS -->
+  <!-- 장면 캡처 -->
   <div class="section">
-    <div class="section-title">Visual Assets — Scene Screenshots</div>
+    <div class="section-title">시각 자료 — 장면 스크린샷</div>
     <div class="screenshot-section">
-      <div class="screenshot-box">
-        <div class="action-tag">Action Required</div>
-        <div class="icon">🖥️</div>
-        <div class="label-text">Wide Shot — Office Scene</div>
-        <div class="desc">Full frame showing Keychron keyboard on desk<br>with character in frame for context</div>
+      <div class="screenshot-box" id="box1" onclick="document.getElementById('file1').click()">
+        <div class="action-tag" id="tag1">클릭하여 업로드</div>
+        <input type="file" id="file1" accept="image/*" onclick="event.stopPropagation()" onchange="uploadImage('box1','file1','tag1')">
+        <div class="placeholder">
+          <div class="icon">🖥️</div>
+          <div class="label-text">전체 장면 컷 (와이드 샷)</div>
+          <div class="desc">키크론 키보드가 책상 위에 보이는 전체 프레임<br>등장인물이 함께 나오는 컷</div>
+          <div class="upload-hint">↑ 클릭하여 이미지 업로드</div>
+        </div>
+        <button class="remove-btn" onclick="removeImage(event,'box1','file1','tag1')">✕ 제거</button>
       </div>
-      <div class="screenshot-box">
-        <div class="action-tag">Action Required</div>
-        <div class="icon">⌨️</div>
-        <div class="label-text">Close-up Shot — Keyboard</div>
-        <div class="desc">Zoomed-in capture of the Keychron keyboard<br>showing product details and branding</div>
+      <div class="screenshot-box" id="box2" onclick="document.getElementById('file2').click()">
+        <div class="action-tag" id="tag2">클릭하여 업로드</div>
+        <input type="file" id="file2" accept="image/*" onclick="event.stopPropagation()" onchange="uploadImage('box2','file2','tag2')">
+        <div class="placeholder">
+          <div class="icon">⌨️</div>
+          <div class="label-text">제품 클로즈업 컷</div>
+          <div class="desc">키크론 키보드를 확대한 캡처<br>제품 디자인 및 브랜딩이 보이는 컷</div>
+          <div class="upload-hint">↑ 클릭하여 이미지 업로드</div>
+        </div>
+        <button class="remove-btn" onclick="removeImage(event,'box2','file2','tag2')">✕ 제거</button>
       </div>
     </div>
-    <ul class="action-list" style="margin-top: 16px;">
-      <li><span class="step">1</span> Identify the exact episode(s) where the Keychron keyboard appears</li>
-      <li><span class="step">2</span> Capture HD screenshots via TVING playback (wide + close-up)</li>
-      <li><span class="step">3</span> Confirm exact product model and update this report</li>
-    </ul>
   </div>
 
-  <!-- 3. EXPOSURE METRICS -->
+  <!-- 3. 노출 지표 -->
   <div class="section">
-    <div class="section-title">③ Exposure Metrics</div>
+    <div class="section-title">③ 노출 지표</div>
 
     <div class="two-col">
       <div>
         <table class="ratings-table">
           <thead>
             <tr>
-              <th>Episode</th>
-              <th>Avg. Rating</th>
-              <th>Peak Rating</th>
-              <th>Rank</th>
+              <th>회차</th>
+              <th>평균 시청률</th>
+              <th>최고 시청률</th>
+              <th>순위</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>EP.01 (Mar 2)</td>
+              <td>1회 (3/2)</td>
               <td class="highlight-val">5.5%</td>
               <td class="highlight-val">7.2%</td>
-              <td><span class="rank-badge">#1</span></td>
+              <td><span class="rank-badge">1위</span></td>
             </tr>
             <tr>
-              <td>EP.02 (Mar 3)</td>
+              <td>2회 (3/3)</td>
               <td>5.0%</td>
               <td>—</td>
-              <td><span class="rank-badge">#1</span></td>
+              <td><span class="rank-badge">1위</span></td>
             </tr>
             <tr>
-              <td>EP.03 (Mar 9)</td>
+              <td>3회 (3/9)</td>
               <td>4.8%</td>
               <td>—</td>
-              <td><span class="rank-badge">#1</span></td>
+              <td><span class="rank-badge">1위</span></td>
             </tr>
             <tr>
-              <td>EP.05 (Mar 16)</td>
+              <td>5회 (3/16)</td>
               <td class="highlight-val">4.5%</td>
               <td>5.4%</td>
-              <td><span class="rank-badge">#1</span></td>
+              <td><span class="rank-badge">1위</span></td>
             </tr>
             <tr>
-              <td>EP.06 (Mar 17)</td>
+              <td>6회 (3/17)</td>
               <td>4.4%</td>
               <td>—</td>
-              <td><span class="rank-badge">#1</span></td>
+              <td><span class="rank-badge">1위</span></td>
             </tr>
             <tr>
-              <td>EP.07 (Mar 23)</td>
+              <td>7회 (3/23)</td>
               <td>3.9%</td>
               <td>—</td>
-              <td><span class="rank-badge">#1</span></td>
+              <td><span class="rank-badge">1위</span></td>
             </tr>
             <tr>
-              <td>EP.09 (Mar 30)</td>
-              <td>TBD</td>
+              <td>9회 (3/30)</td>
+              <td>집계 중</td>
               <td>—</td>
-              <td><span class="rank-badge">#1</span></td>
+              <td><span class="rank-badge">1위</span></td>
             </tr>
           </tbody>
         </table>
         <div style="font-size:10px; color:#555; margin-top:8px;">
-          Source: Nielsen Korea · Paid platform nationwide household basis<br>
-          All episodes ranked #1 among cable/general programming channels in timeslot
+          출처: 닐슨코리아 · 유료 플랫폼 전국 가구 기준<br>
+          전 회차 케이블·종편 동시간대 1위 기록
         </div>
       </div>
 
       <div>
-        <div class="section-title" style="font-size:11px; margin-bottom:12px;">Streaming Platforms</div>
+        <div class="section-title" style="font-size:12px; margin-bottom:12px;">방영 플랫폼</div>
         <div style="display:grid; gap:10px;">
           <div class="platform-card">
             <div class="platform-icon p-tvn">tvN</div>
             <div class="platform-info">
-              <div class="p-name">tvN (Linear TV)</div>
-              <div class="p-detail">Primary broadcast · Mon/Tue 20:50 KST</div>
+              <div class="p-name">tvN (본방송)</div>
+              <div class="p-detail">매주 월·화 저녁 8시 50분</div>
             </div>
           </div>
           <div class="platform-card">
             <div class="platform-icon p-tving">T</div>
             <div class="platform-info">
-              <div class="p-name">TVING (Exclusive OTT)</div>
-              <div class="p-detail">5.52M MAU · Korea's #3 OTT platform</div>
+              <div class="p-name">TVING (독점 OTT)</div>
+              <div class="p-detail">월간 이용자 552만명 · 국내 OTT 3위</div>
             </div>
           </div>
           <div class="platform-card">
             <div class="platform-icon p-apple">▶</div>
             <div class="platform-info">
               <div class="p-name">Apple TV+</div>
-              <div class="p-detail">Available for global distribution</div>
+              <div class="p-detail">글로벌 배급</div>
             </div>
           </div>
           <div class="platform-card">
             <div class="platform-icon p-prime">P</div>
             <div class="platform-info">
               <div class="p-name">Amazon Prime Video</div>
-              <div class="p-detail">Available for global distribution</div>
+              <div class="p-detail">글로벌 배급</div>
             </div>
           </div>
         </div>
@@ -564,43 +613,80 @@
     </div>
   </div>
 
-  <!-- SNS REACTIONS -->
+  <!-- SNS 반응 -->
   <div class="section">
-    <div class="section-title">SNS & Online Buzz</div>
+    <div class="section-title">SNS 및 온라인 반응</div>
     <div class="sns-note">
-      <strong>⚠ Note:</strong> As of March 31, 2026, no specific SNS posts or viewer comments mentioning the Keychron keyboard placement in "Siren" have been identified through web search.
-      Additional monitoring of Twitter/X, Instagram, and Korean community platforms (DCInside, TheQoo, Namu Wiki) is recommended to capture any organic viewer reactions.<br><br>
-      <strong>Recommendation:</strong> If the keyboard appears prominently in upcoming episodes (EP.10–12), consider a coordinated social media campaign with the drama's official hashtag <strong>#세이렌</strong> to maximize brand exposure.
+      <strong>⚠ 참고:</strong> 2026년 3월 31일 기준, 「세이렌」 내 키크론 키보드 노출을 직접 언급한 SNS 게시물이나 시청자 댓글은 아직 확인되지 않았습니다.
+      Twitter/X, Instagram, 국내 커뮤니티(디시인사이드, 더쿠, 나무위키) 등에 대한 추가 모니터링을 권장합니다.<br><br>
+      <strong>제안:</strong> 향후 회차(10~12화)에서 키보드가 눈에 띄게 등장할 경우, 드라마 공식 해시태그 <strong>#세이렌</strong>과 연계한 SNS 캠페인을 진행하면 브랜드 노출 효과를 극대화할 수 있습니다.
     </div>
   </div>
 
-  <!-- 4. SUMMARY -->
+  <!-- 4. 요약 리포트 -->
   <div class="section">
-    <div class="section-title">④ Executive Summary</div>
-    <div style="background:#1a1a1a; border:1px solid #252525; border-radius:8px; padding:24px; font-size:13px; line-height:2; color:#ccc;">
-      <strong style="color:#fff; font-size:15px;">Keychron Product Placement in tvN "Siren" (세이렌)</strong><br><br>
-      Keychron keyboards have been featured as office props in the tvN drama <em>"Siren"</em> (세이렌),
-      a romance-thriller airing since March 2, 2026. The drama stars <strong style="color:#fff;">Park Min-young</strong>,
-      <strong style="color:#fff;">Wi Ha-jun</strong>, and <strong style="color:#fff;">Kim Jung-hyun</strong>, and is directed by
-      <strong style="color:#fff;">Kim Cheol-gyu</strong> (known for <em>Signal</em> and <em>Flower of Evil</em>).<br><br>
-      The drama debuted with a <strong style="color:#FF4500;">5.5% average rating (peak 7.2%)</strong> and has maintained
-      the <strong style="color:#FF4500;">#1 position in its timeslot</strong> across all cable and general programming channels
-      for every episode aired. It is exclusively streamed on <strong style="color:#fff;">TVING</strong> (5.52M monthly active users)
-      and is also available on Apple TV+ and Amazon Prime Video for global audiences.<br><br>
-      <strong style="color:#FF4500;">Action Items:</strong>
-      (1) Confirm exact episode(s) and scene(s) where the keyboard appears,
-      (2) Capture HD screenshots from TVING,
-      (3) Identify the specific Keychron model featured,
-      (4) Monitor SNS for organic viewer mentions.
+    <div class="section-title">④ 요약 리포트</div>
+    <div style="background:#1a1a1a; border:1px solid #252525; border-radius:8px; padding:24px; font-size:13px; line-height:2.2; color:#ccc;">
+      <strong style="color:#fff; font-size:15px;">tvN 「세이렌」 키크론 간접광고(PPL) 결과 요약</strong><br><br>
+      키크론 키보드는 2026년 3월 2일부터 방영 중인 tvN 월화 드라마 「세이렌」에 사무실 소품으로 협찬되었습니다.
+      본 드라마는 <strong style="color:#fff;">박민영</strong>, <strong style="color:#fff;">위하준</strong>,
+      <strong style="color:#fff;">김정현</strong> 주연이며, <strong style="color:#fff;">김철규</strong> PD(시그널, 악의 꽃)가
+      연출을 맡았습니다.<br><br>
+      첫 회 <strong style="color:#FF4500;">평균 시청률 5.5% (최고 7.2%)</strong>로 출발하여,
+      <strong style="color:#FF4500;">전 회차 케이블·종편 동시간대 1위</strong>를 기록하며 안정적인 시청률을 유지하고 있습니다.
+      OTT는 <strong style="color:#fff;">TVING</strong>(월간 이용자 552만명)에서 독점 스트리밍되며,
+      글로벌로는 Apple TV+와 Amazon Prime Video를 통해 배급되고 있습니다.<br><br>
+      <strong style="color:#FF4500;">후속 조치 사항:</strong>
+      (1) 키보드 등장 회차 및 장면 정확히 확인,
+      (2) TVING을 통한 HD 스크린샷 캡처,
+      (3) 등장한 키크론 모델 특정,
+      (4) SNS 시청자 반응 지속 모니터링.
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div>Keychron PPL Report · tvN "Siren" · Confidential</div>
-    <div>© 2026 TBNWS · Prepared for Keychron HQ</div>
+    <div>키크론 PPL 리포트 · tvN 「세이렌」 · 대외비</div>
+    <div>© 2026 TBNWS · 키크론 본사 전달용</div>
   </div>
 
 </div>
+<script>
+function uploadImage(boxId, fileId, tagId) {
+  const file = document.getElementById(fileId).files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const box = document.getElementById(boxId);
+    // 기존 placeholder 숨기기
+    const placeholder = box.querySelector('.placeholder');
+    if (placeholder) placeholder.style.display = 'none';
+    // 이미지 추가
+    let img = box.querySelector('img.preview');
+    if (!img) {
+      img = document.createElement('img');
+      img.className = 'preview';
+      box.appendChild(img);
+    }
+    img.src = e.target.result;
+    box.classList.add('has-image');
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeImage(event, boxId, fileId, tagId) {
+  event.stopPropagation();
+  const box = document.getElementById(boxId);
+  const img = box.querySelector('img.preview');
+  if (img) img.remove();
+  const placeholder = box.querySelector('.placeholder');
+  if (placeholder) placeholder.style.display = 'flex';
+  box.classList.remove('has-image');
+  // 파일 인풋 리셋
+  const input = document.getElementById(fileId);
+  input.value = '';
+  input.style.display = '';
+}
+</script>
 </body>
 </html>
